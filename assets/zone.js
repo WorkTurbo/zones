@@ -59,7 +59,6 @@ function Zone(parentZone, data) {
   return zone;
 }
 
-
 Zone.prototype = {
   constructor: Zone,
 
@@ -117,7 +116,6 @@ Zone.prototype = {
   dequeueTask: function () {}
 };
 
-
 Zone.patchSetClearFn = function (obj, fnNames) {
   fnNames.map(function (name) {
     return name[0].toUpperCase() + name.substr(1);
@@ -158,7 +156,6 @@ Zone.patchSetClearFn = function (obj, fnNames) {
         };
       }
 
-
       obj[setName] = function () {
         return Zone._apply(zone[setName], this, arguments);
       };
@@ -188,7 +185,6 @@ Zone.bindArguments = function (args, ownerInfo) {
   }
   return args;
 };
-
 
 Zone.bindArgumentsOnce = function (args, ownerInfo) {
   for (var i = args.length - 1; i >= 0; i--) {
@@ -292,7 +288,7 @@ Zone.patchEventTargetMethods = function (obj, thing) {
 
   var removeDelegate = obj.removeEventListener;
   obj.removeEventListener = function (eventName, fn) {
-    if(arguments[1]._bound && arguments[1]._bound[eventName]) {
+    if(arguments[1] && arguments[1]._bound && arguments[1]._bound[eventName]) {
       arguments[1] = arguments[1]._bound[eventName];
     }
     var result = Zone._apply(removeDelegate, this, arguments);
