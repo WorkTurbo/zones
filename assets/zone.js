@@ -313,8 +313,6 @@ module.exports = {
   _redefineProperty: _redefineProperty
 };
 
-
-
 },{}],5:[function(require,module,exports){
 (function (global){
 'use strict';
@@ -449,7 +447,6 @@ function patchFunction(obj, fnNames) {
     };
   });
 };
-
 
 module.exports = {
   patchSetClearFunction: patchSetClearFunction,
@@ -596,7 +593,6 @@ if (global.Promise) {
   };
 }
 
-
 function _patchPromiseFnsOnObject(objectPath, fnNames) {
   var obj = global;
 
@@ -634,7 +630,6 @@ function _patchThenable(thenable) {
 
   return thenable;
 }
-
 
 function apply() {
   // Patch .then() and .catch() on native Promises to execute callbacks in the zone where
@@ -944,7 +939,7 @@ function patchEventTargetMethods(obj, thing) {
 
   var removeDelegate = obj.removeEventListener;
   obj.removeEventListener = function (eventName, fn) {
-    if(arguments[1]._bound && arguments[1]._bound[eventName]) {
+    if(arguments[1] && arguments[1]._bound && arguments[1]._bound[eventName]) {
       var _bound = arguments[1]._bound;
       arguments[1] = _bound[eventName];
       delete _bound[eventName];
